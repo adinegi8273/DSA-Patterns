@@ -668,32 +668,168 @@
 
 // class Solution {
 // public:
-//     long long countGood(vector<int>& nums, int k) {
+//     int minimumSubarrayLength(vector<int>& nums, int k) {
         
-//         long long res = 0;
 
 //         int l = 0,r = 0;
 
-//         int n= nums.size();
-        
-//         unordered_map<int,int> mpp;
+//         vector<int> setBitCount(31,0);
+//         int OR = 0;
 
-//         long long cnt = 0;
+//         int n = nums.size();
+//         int minlen = INT_MAX;
 //         while(r < n){
 
-//             cnt = cnt + mpp[nums[r]];
-//             mpp[nums[r]]++;
+//             OR = OR | nums[r];
 
-//             while(l <= r && cnt >= k){
-//                 mpp[nums[l]]--;
-//                 res = res + (n-r);
-//                 if(mpp[nums[l]] == 0) mpp.erase(nums[l]);
-//                 cnt = cnt - mpp[nums[l]];
+//             for(int i=0;i<31;i++){
+
+//                 if(((nums[r]>>i) & 1) == 1){
+//                     setBitCount[i]++;
+//                 }
+//             }
+
+//             while(l <= r && OR >= k){
+
+//                 minlen = min(minlen,r-l+1);
+
+//                 for(int i=0;i<31;i++){
+//                     if(((nums[l]>>i) & 1) == 1){
+//                         setBitCount[i]--;
+//                     }
+//                 }
+
+//                 for(int i=0;i<31;i++){
+//                     if(setBitCount[i] == 0 && ((OR>>i) & 1) == 1){
+
+//                         //make this bit in or variable equalt to zero bu ysing xor operator
+//                         OR = OR ^ (1<<i);
+//                     }
+//                 }
+
 //                 l++;
 //             }
 //             r++;
 //         }
-//         return res;
+
+//         if(OR >= k){
+//             minlen = min(minlen,r-l+1);
+//         }
+
+//         return (minlen == INT_MAX)?-1:minlen;
+        
+//     }
+// };
+
+
+// ----------------------------------------------------------------------------------------------------------------
+
+// Problem 9 - Count of Substrings Containing Every Vowel and K Consonants II
+
+// You are given a string word and a non-negative integer k.
+// Return the total number of substrings of word that contain every vowel ('a', 'e', 'i', 'o', and 'u') at least once and exactly k consonants.
+
+
+// Example 1:
+
+// Input: word = "aeioqq", k = 1
+// Output: 0
+// Explanation:
+// There is no substring with every vowel.
+
+// Example 2:
+// Input: word = "aeiou", k = 0
+// Output: 1
+// Explanation:
+// The only substring with every vowel and zero consonants is word[0..4], which is "aeiou".
+
+// Example 3:
+// Input: word = "ieaouqqieaouqq", k = 1
+// Output: 3
+// Explanation:
+// The substrings with every vowel and one consonant are:
+// word[0..5], which is "ieaouq".
+// word[6..11], which is "qieaou".
+// word[7..12], which is "ieaouq".
+ 
+// Constraints:
+
+// 5 <= word.length <= 2 * 105
+// word consists only of lowercase English letters.
+// 0 <= k <= word.length - 5
+
+
+// class Solution {
+// public:
+
+
+//     bool isVowel(char ch){
+//         if(ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') return true;
+
+//         return false;
 //     }
 
+//     long long countOfSubstrings(string s, int k) {
+        
+//         int n= s.size();
+
+//         vector<int> nextCons(n);
+
+//         int prev = n;
+//         for(int i=n-1;i>=0;i--){
+//             nextCons[i] = prev;
+//             if(!isVowel(s[i])){
+//                 prev = i;
+//             }
+//         }
+
+//         int l = 0,r = 0;
+
+//         long long res = 0;
+//         int cons_cnt = 0;
+//         unordered_map<char,int> mpp;
+//         while(r < n){
+
+//             if(isVowel(s[r])){
+//                 mpp[s[r]]++;
+//             }
+//             else{
+//                 cons_cnt++;
+//             }
+
+//             while(mpp.size() == 5 && cons_cnt == k){
+
+//                 //cnt all subtrings which are valid by using next Consonant concept
+//                 res = res + (nextCons[r] - r);
+
+//                 if(isVowel(s[l])){
+//                     mpp[s[l]]--;
+//                     if(mpp[s[l]] == 0) mpp.erase(s[l]);
+//                 }
+//                 else{
+//                     cons_cnt--;
+//                 }
+
+//                 l++;
+//             }
+
+//             while(cons_cnt > k){
+
+//                 if(isVowel(s[l])){
+//                     mpp[s[l]]--;
+//                     if(mpp[s[l]] == 0) mpp.erase(s[l]);
+//                 }
+//                 else{
+//                     cons_cnt--;
+//                 }
+
+//                 l++;
+//             }
+
+//             r++;
+//         }
+
+//         return res;
+//     }
 // };
+
