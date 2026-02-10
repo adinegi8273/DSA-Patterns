@@ -310,4 +310,237 @@ using namespace std;
 //     }
 // };
 
+// --------------------------------------------------------------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------------------------------------------
+
+// Problem - Kth symbol in grammar
+
+// --------------------------------------------------------------------------------------------------------------
+
+// Problem - Tower of Hanoi
+
+// In this problem two towers are given one is a source tower and other is a destination tower the source tower
+// has n rings and we want to transfer all these rings to destination tower given the following rules -
+
+// 1. A bigger ring can't be placed on top of a smaller ring
+// 2. We have to transfer on ring at a time
+
+// Find how many steps has taken
+
+// Time complexity is O((2^n)-1)
+//  void toh(int n,char src,char dst,char aux){
+
+//         if(n == 0) return;
+//         toh(n-1,src,aux,dst);
+//         cout<<"Ring transferred from "<<src<<" to "<<dst<<" using "<<aux<<endl;
+//         toh(n-1,aux,dst,src);
+// }
+// int main(){
+//         int n = 3;
+//         char src = 'A', dst = 'B',aux = 'C';
+//         //i want to transfer all rings from src to dst using auxiliary tower
+//         toh(n,src,dst,aux);
+//         return 0;
+// }
+
+// ------------------------------------------------------------------------------------------------------------------
+
+// Problem - Printing subsets
+
+// Given an array of unique integers and we want to find out the number of subsets possible also print those subsets
+
+// Time complexity is O((2^n)-1)
+//  void printSubsets(int index,vector<int>& subset,vector<int>& nums,int& cnt){
+
+//         //base condtion
+//         if(index == nums.size()){
+//                 if(subset.empty()){
+//                         return;
+//                 }
+//                 cnt++;
+//                 for(int elem:subset){
+//                         cout<<elem<<" ";
+//                 }
+//                 cout<<endl;
+//                 return;
+//         }
+//         //at an index i have a choice of either taking the element in subset or not
+//         printSubsets(index+1,subset,nums,cnt);
+//         subset.push_back(nums[index]);
+//         printSubsets(index+1,subset,nums,cnt);
+//         //then backtrack -> means remove the element which u pushed
+//         subset.pop_back();
+// }
+
+// int main(){
+
+//         vector<int> nums = {1,2,3};
+//         vector<int> subset;
+//         int cnt = 0;
+//         printSubsets(0,subset,nums,cnt);
+//         cout<<"Total number of subsets were:"<<cnt;
+//         return 0;
+// }
+
+// -------------------------------------------------------------------------------------------------------------
+
+// Problem - Given an array of integers that may contain duplicate elements. Your task is to print all unique subsets of teh given array.
+
+// Approach 1 -
+
+//   Time complexity is O(n*2^n) and space complexity is O(n*2^n)
+
+// vector<vector<int>> AllSubsets(vector<int>& a,int n){
+
+// set<vector<int>> st;
+// vector<int> empty = {};//put empty list in your set
+
+// st.insert(empty);
+
+// for(int i=0;i<n;i++){
+
+//     int elem = a[i];
+
+//     //add this element in every subset we have found so far
+//     set<vector<int>> new_st;
+//     for(auto list:st){
+//         list.push_back(elem);
+//         sort(list.begin(),list.end());
+//         new_st.insert(list);
+//     }
+
+//     for(auto list:new_st){
+//         st.insert(list);
+//     }
+// }
+
+// vector<vector<int>> res;
+
+// for(auto list:st){
+//     res.push_back(list);
+// }
+
+// return res;
+
+// at the end set will contain all unqiue subsets of the array
+
+// Approach 2 -
+
+// Total time complexity is O(nlogn + n*2^n) and Space complexity is O(n) if exclude the output (with output is O(n*2^n) space)
+
+// void findSubsets(int index,vector<int>& a,vector<int>& subset,vector<vector<int>>& res){
+
+//     res.push_back(subset);
+
+//     for(int i=index+1;i<a.size();i++){
+
+//         if(i > index+1 && a[i] == a[i-1]){
+//             continue;
+//         }
+
+//         subset.push_back(a[i]);
+//         findSubsets(index+1,a,subset,res);
+
+//         //backtracking
+//         subset.pop_back();
+//     }
+
+// }
+
+//  vector<vector<int>> AllSubsets(vector<int>& a,int n){
+
+//     vector<vector<int>> res;
+//     vector<int> subset;
+
+//     findSubsets(-1,a,subset,res);
+
+//     return res;
+// }
+
+// -----------------------------------------------------------------------------------------------------------
+
+// Problem - Permutations with Spaces
+
+// class Solution {
+//   public:
+
+// //   time complexity is O(2^n*n)
+// //   space complexity is O(n)
+
+//     void solve(int index,string s,string maintain,vector<string>& res){
+
+//         if(index == s.size()){
+//             res.push_back(maintain);//<-this will take O(n) time
+//             return;
+//         }
+
+//         string temp;
+
+//         temp = maintain + s[index];
+
+//         solve(index+1,s,temp,res);
+
+//         if(index != 0){
+
+//             temp = maintain + " " + s[index];
+
+//             solve(index+1,s,temp,res);
+//         }
+
+//     }
+//     vector<string> permutation(string s) {
+
+//         vector<string> res;
+//         string maintain = "";
+//         solve(0,s,maintain,res);
+//         sort(res.begin(),res.end());//<- i have 2^n strings in my res vector so totak time complexity is O(2^nlog(2^n))
+//         return res;
+//     }
+// };
+
+// class Solution {
+//   public:
+
+//     vector<string> permutation(string s) {
+
+//         //solving this iteratively
+//         vector<string> res;
+//         vector<string> prev;
+
+//         string str = s.substr(0,1);
+//         prev.push_back(str);
+
+//         for(int i=1;i<s.size();i++){
+
+//             char ch = s[i];
+
+//             vector<string> curr;
+
+//             for(string str:prev){
+//                 string temp = str + ch;
+//                 curr.push_back(temp);
+//                 temp = str + " " + ch;
+//                 curr.push_back(temp);
+//             }
+
+//             prev = curr;
+//         }
+
+//         for(string str:prev){
+//             res.push_back(str);
+//         }
+
+//         reverse(res.begin(),res.end());
+
+//         return res;
+
+//         //overall time complexity is O(n*2^n)
+//         //space complexity is O(n*2^n)
+//     }
+// };
+
+// ---------------------------------------------------------------------------------------------------------
+
+
 
