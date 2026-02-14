@@ -542,5 +542,86 @@ using namespace std;
 
 // ---------------------------------------------------------------------------------------------------------
 
+// Problem  - Generate All balanced Parethesis
+
+// Given n pairs of parenthesis,write a function to generate all comninations of well formed parethesis
+
+
+
+// class Solution {
+// public:
+//     void solve(int index, int openingYet, int openingRem, string maintain,
+//                int limit, vector<string>& res) {
+
+//         if (index == limit) {
+//             res.push_back(maintain);
+//             return;
+//         }
+
+//         // either i put a opening parethesis at index
+//         if (openingRem > 0) {
+//             maintain = maintain + '(';
+//             solve(index + 1, openingYet + 1, openingRem - 1, maintain, limit,
+//                   res);
+//             maintain.pop_back(); // backtrack
+//         }
+
+//         // or i put closing if openiniYet > 0
+//         if (openingYet > 0) {
+
+//             maintain = maintain + ")";
+//             solve(index + 1, openingYet - 1, openingRem, maintain, limit, res);
+//             maintain.pop_back(); // backtrack
+//         }
+//     }
+//     vector<string> generateParenthesis(int n) {
+
+//         vector<string> res;
+//         string maintain = "";
+//         solve(0, 0, n,maintain,2*n,res);
+//         return res;
+//     }
+// };
+
+// class Solution {
+// public:
+
+//     void solve(int index,int open,string maintain,int n,vector<string>& res){
+
+//         if(index == 2*n){
+//             res.push_back(maintain);
+//             return;
+//         }
+
+//         //u can insert ( if opening cnt is less than n
+//         if(open < n){
+//             maintain = maintain + "(";
+//             solve(index+1,open+1,maintain,n,res);
+//             maintain.pop_back();//backtracking
+//         }
+
+//         if(maintain.size() - open < open){
+//             //this means that so far number of closing brackets used are lesser than opening
+//             //it means you can insert ) as well
+//             maintain = maintain + ")";
+//             solve(index+1,open,maintain,n,res);
+//             maintain.pop_back();//backtracking
+//         }
+//     }
+
+//     vector<string> generateParenthesis(int n) {
+        
+//         string maintain = "";
+//         vector<string> res;
+//         solve(0,0,maintain,n,res);
+//         return res;
+//     }
+
+//     //a little optimized
+// };
+
+
+// -------------------------------------------------------------------------------------------------------------
+
 
 
