@@ -192,3 +192,87 @@ Given n pairs of parenthesis,write a function to generate all comninations of we
 
 //     }
 // };
+
+// ------------------------------------------------------------------------------------------------------
+
+
+// Problem 4 - Different Ways to add Parenthesis
+
+// Give an expression which is a string containing operators and integers return all possible results from it
+
+// example - 
+// input - expression "2-1-1"
+// outout - {2,0}
+
+// #include<bits/stdc++.h>
+
+
+// using namespace std;
+
+
+// vector<int> solve(string s){
+
+//     bool flag = false;//if any operator is present or not
+
+//     int n= s.size();
+
+//     for(int i=0;i<n;i++){
+
+//         if(s[i] == '*' || s[i] == '+' || s[i] == '-'){
+//             flag = true;
+//             break;
+//         }
+//     }
+
+//     if(flag == false){
+
+//         int number = stoi(s);
+//         return {number};
+//     }
+
+//     vector<int> ans;
+//     for(int i=0;i<n;i++){
+
+//         if(s[i] == '*' || s[i] == '-' || s[i] == '+'){
+//             string left = s.substr(0,i);
+//             string right = s.substr(i+1);
+
+//             vector<int> l = solve(left);
+//             vector<int> r = solve(right); 
+            
+//             for(int j=0;j<l.size();j++){
+
+//                 for(int k=0;k<r.size();k++){
+                    
+//                     int res;
+//                     if(s[i] == '*'){
+//                         res = l[j] * r[k];
+//                     }
+//                     else if(s[i] == '+'){
+//                         res = l[j] + r[k];
+//                     }
+//                     else{
+//                         res = l[j] - r[k];
+//                     }
+                    
+//                     ans.push_back(res);
+                    
+//                 }
+//             }
+//         }
+//     }
+
+//     return ans;
+// }
+// int main(){
+
+//     string s;
+//     cin>>s;
+
+//     vector<int> res = solve(s);
+
+//     for(int number:res){
+//         cout<<number<<" ";
+//     }
+//     return 0;
+// }
